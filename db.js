@@ -11,6 +11,25 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log("✅ Connected to MySQL Database");
+
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS schools (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      address VARCHAR(255) NOT NULL,
+      latitude FLOAT NOT NULL,
+      longitude FLOAT NOT NULL
+    );
+  `;
+
+  connection.query(createTableQuery, (err) => {
+    if (err) {
+      console.error("Error creating schools table:", err.message);
+    } else {
+      console.log("Table 'schools' is ready.");
+    }
+  });
+
 });
 
 module.exports = connection;
